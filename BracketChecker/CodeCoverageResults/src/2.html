@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\Users\dyshoup\Documents\GitHub\PersonalProjects\BracketChecker\BracketChecker\Program.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace JsonChecker
+{
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            Console.Read();
+        }
+
+        /// &lt;summary&gt;
+        /// Indicates whether or not the incoming string is contained in brackets
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;jsonInput&quot;&gt;The attempted json you would like to confirm&lt;/param&gt;
+        /// &lt;returns&gt;Returns a boolean determining if the input string is a valid &quot;Json&quot; string&lt;/returns&gt;
+        public static bool JsonChecker(string jsonInput)
+        {
+            //Early bailouts if it detects any discrepancies
+            if (string.IsNullOrWhiteSpace(jsonInput))
+                return true;
+            if (jsonInput.Count(x =&gt; x == &#39;{&#39;) != jsonInput.Count(x =&gt; x == &#39;}&#39;))
+                return false;
+
+            //The stack holds chars and builds pairs as the foreach below goes through
+            var bracketStack = new Stack&lt;char&gt;();
+            var bracketCompleted = false;
+            var bracketContinues = false;
+
+            jsonInput
+                .Where(character =&gt; character == &#39;{&#39; || character == &#39;}&#39;)
+                .Aggregate(&quot;&quot;, (current, character) =&gt; current + character)
+                .ToList()
+                .ForEach(x =&gt;
+                {
+                    if (x == &#39;{&#39;)
+                    {
+                        if (bracketCompleted)
+                            bracketContinues = true;
+                        else
+                            bracketStack.Push(&#39;{&#39;);
+                    }
+                    else if (bracketStack.Count != 0)
+                    {
+                        bracketStack.Pop();
+                        bracketCompleted = true;
+                    }
+                });
+
+            //If the count is 0, then that means the stack was executed to completion and all pairs were identified
+            return bracketStack.Count == 0 &amp;&amp; !bracketContinues;
+        }
+    }
+}
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[19,9,19,10,1],[21,13,21,54,1],[22,17,22,29,1],[23,13,23,38,1],[23,38,23,46,1],[23,46,23,72,1],[23,72,23,80,1],[23,80,23,82,1],[24,17,24,30,1],[27,13,27,50,1],[28,13,28,42,1],[29,13,29,42,1],[31,13,32,37,1],[32,37,32,73,1],[32,73,33,56,1],[33,56,33,75,1],[33,75,36,17,1],[36,17,36,18,1],[36,18,37,21,1],[37,21,37,34,1],[37,34,38,21,1],[38,21,38,22,1],[38,22,39,25,1],[39,25,39,46,1],[39,46,40,29,1],[40,29,40,53,1],[40,53,42,29,1],[42,29,42,52,1],[42,52,43,21,1],[43,21,43,22,1],[43,22,44,26,1],[44,26,44,54,1],[44,54,45,21,1],[45,21,45,22,1],[45,22,46,25,1],[46,25,46,44,1],[46,44,47,25,1],[47,25,47,49,1],[47,49,48,21,1],[48,21,48,22,1],[48,22,49,17,1],[49,17,49,18,1],[49,18,49,20,1],[52,13,52,65,1],[53,9,53,10,1]]);
+    </script>
+  </body>
+</html>

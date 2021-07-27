@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\Users\dyshoup\Documents\GitHub\PersonalProjects\BracketChecker\BracketCheckerTests\BracketCheckerTests.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+using JsonChecker;
+using Xunit;
+
+namespace BracketCheckerTests
+{
+    public class BracketCheckerTests
+    {
+        [Theory]
+        [InlineData(null)]
+        [InlineData(&quot;{}&quot;)]
+        [InlineData(&quot;&quot;)]
+        [InlineData(&quot;abc{}abc&quot;)]
+        [InlineData(&quot;{{{{{}}}}}&quot;)]
+        [InlineData(&quot;{Tester test}&quot;)]
+        [InlineData(&quot;{[]}&quot;)]
+        [InlineData(&quot;[{}]&quot;)]
+        [InlineData(&quot;[]{}&quot;)]
+        public void PositiveTests(string testString)
+        {
+            Assert.True(Program.JsonChecker(testString));
+        }
+
+        [Theory]
+        [InlineData(&quot;}{&quot;)]
+        [InlineData(&quot;{{}&quot;)]
+        [InlineData(&quot;{{{{{&quot;)]
+        [InlineData(&quot;{}{{{{&quot;)]
+        [InlineData(&quot;{}{}&quot;)]
+        public void NegativeTests(string testString)
+        {
+            Assert.False(Program.JsonChecker(testString));
+        }
+    }
+}
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[19,9,19,10,1],[20,13,20,58,1],[21,9,21,10,1],[30,9,30,10,1],[31,13,31,59,1],[32,9,32,10,1]]);
+    </script>
+  </body>
+</html>
