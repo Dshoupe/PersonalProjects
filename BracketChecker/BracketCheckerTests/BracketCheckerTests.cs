@@ -7,17 +7,19 @@ namespace BracketCheckerTests
     {
         [Theory]
         [InlineData(null)]
-        [InlineData("{}")]
         [InlineData("")]
+        [InlineData("{}")]
         [InlineData("abc{}abc")]
         [InlineData("{{{{{}}}}}")]
         [InlineData("{Tester test}")]
         [InlineData("{[]}")]
         [InlineData("[{}]")]
         [InlineData("[]{}")]
+        [InlineData("{}{}")]
+        [InlineData("{{}{{{}}}}")]
         public void PositiveTests(string testString)
         {
-            Assert.True(Program.JsonChecker(testString));
+            Assert.True(Program.BracketChecker(testString));
         }
 
         [Theory]
@@ -25,10 +27,15 @@ namespace BracketCheckerTests
         [InlineData("{{}")]
         [InlineData("{{{{{")]
         [InlineData("{}{{{{")]
-        [InlineData("{}{}")]
+        [InlineData("{{{{{{}}}}}")]
+        [InlineData("{{}}}{{}}{}}{}{{}}{{{{{}{}{}{}{{}{}}}}")]
+        [InlineData("{{}}}{}{}{}{{}{{{{{}}}}{}{{}{}}}")]
+        [InlineData("{}}}{}{}{{}}{{{{}}}{{{}{}}")]
+        [InlineData("{}}}{{}{{}}{{{{}}}{{}}{}")]
+        [InlineData("}{{{}}{{}{{}}}")]
         public void NegativeTests(string testString)
         {
-            Assert.False(Program.JsonChecker(testString));
+            Assert.False(Program.BracketChecker(testString));
         }
     }
 }
