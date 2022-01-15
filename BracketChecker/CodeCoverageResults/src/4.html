@@ -17,17 +17,19 @@ namespace BracketCheckerTests
     {
         [Theory]
         [InlineData(null)]
-        [InlineData(&quot;{}&quot;)]
         [InlineData(&quot;&quot;)]
+        [InlineData(&quot;{}&quot;)]
         [InlineData(&quot;abc{}abc&quot;)]
         [InlineData(&quot;{{{{{}}}}}&quot;)]
         [InlineData(&quot;{Tester test}&quot;)]
         [InlineData(&quot;{[]}&quot;)]
         [InlineData(&quot;[{}]&quot;)]
         [InlineData(&quot;[]{}&quot;)]
+        [InlineData(&quot;{}{}&quot;)]
+        [InlineData(&quot;{{}{{{}}}}&quot;)]
         public void PositiveTests(string testString)
         {
-            Assert.True(Program.JsonChecker(testString));
+            Assert.True(Program.BracketChecker(testString));
         }
 
         [Theory]
@@ -35,16 +37,21 @@ namespace BracketCheckerTests
         [InlineData(&quot;{{}&quot;)]
         [InlineData(&quot;{{{{{&quot;)]
         [InlineData(&quot;{}{{{{&quot;)]
-        [InlineData(&quot;{}{}&quot;)]
+        [InlineData(&quot;{{{{{{}}}}}&quot;)]
+        [InlineData(&quot;{{}}}{{}}{}}{}{{}}{{{{{}{}{}{}{{}{}}}}&quot;)]
+        [InlineData(&quot;{{}}}{}{}{}{{}{{{{{}}}}{}{{}{}}}&quot;)]
+        [InlineData(&quot;{}}}{}{}{{}}{{{{}}}{{{}{}}&quot;)]
+        [InlineData(&quot;{}}}{{}{{}}{{{{}}}{{}}{}&quot;)]
+        [InlineData(&quot;}{{{}}{{}{{}}}&quot;)]
         public void NegativeTests(string testString)
         {
-            Assert.False(Program.JsonChecker(testString));
+            Assert.False(Program.BracketChecker(testString));
         }
     }
 }
     </pre>
     <script type="text/javascript">
-      highlightRanges([[19,9,19,10,1],[20,13,20,58,1],[21,9,21,10,1],[30,9,30,10,1],[31,13,31,59,1],[32,9,32,10,1]]);
+      highlightRanges([[21,9,21,10,1],[22,13,22,61,1],[23,9,23,10,1],[37,9,37,10,1],[38,13,38,62,1],[39,9,39,10,1]]);
     </script>
   </body>
 </html>
