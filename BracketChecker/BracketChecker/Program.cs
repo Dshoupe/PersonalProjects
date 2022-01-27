@@ -29,8 +29,30 @@ namespace JsonChecker
                         break;
                 }
             }
-            
+
             return !bracketStack.Any();
+        }
+
+        public static long FibonacciSequence(int n)
+        {
+            if (n < 0) throw new ArgumentException("Parameter n cannot be lower than 0");
+            if (n >= 93) throw new OverflowException("Function cannot go past 92 with long data type limitations");
+            if (n == 0) return 0;
+            if (n == 1) return 1;
+
+            long first = 0;
+            long second = 1;
+            long sum = 1;
+            var pointer = n;
+            do
+            {
+                sum = first + second;
+                first = second;
+                second = sum;
+                pointer--;
+            } while (pointer >= 2);
+
+            return sum;
         }
     }
 }
